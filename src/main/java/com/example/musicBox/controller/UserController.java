@@ -24,7 +24,7 @@ public class UserController {
  private final UserFacade userFacade;
 
 @GetMapping
-@PreAuthorize("hasRole('USER')")
+@PreAuthorize("hasRole('USER', 'ADMIN', 'ARTIST')")
 public ResponseEntity<UserDto> userViewItsInfo(){
     return ResponseEntity.ok(userFacade.userViewItsInformation());
 }
