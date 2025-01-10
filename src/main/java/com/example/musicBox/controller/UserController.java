@@ -30,7 +30,7 @@ public ResponseEntity<UserDto> userViewItsInfo(){
 }
 
 @PutMapping
-@PreAuthorize("hasRole('USER')")
+@PreAuthorize("hasRole('USER', 'ADMIN', 'ARTIST')")
 
 public ResponseEntity<String> updateItself(@Valid@RequestBody RegisterParam registerParam){
     return ResponseEntity.ok(userFacade.updateUserInformation(registerParam));
