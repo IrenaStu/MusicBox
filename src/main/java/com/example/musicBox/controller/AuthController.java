@@ -36,7 +36,7 @@ public class AuthController {
 
 
     @PutMapping("/changePassword")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('ARTIST')")
     public ResponseEntity<String> updatePassword(@Valid @RequestBody UserPasswordChangeParam passwordChangeParam){
         String responseMassage = authFacade.updatePassword(passwordChangeParam);
         return ResponseEntity.ok(responseMassage);

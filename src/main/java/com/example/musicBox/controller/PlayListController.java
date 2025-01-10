@@ -25,7 +25,7 @@ public class PlayListController {
     private final PlayListService playListService;
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','USER', 'ARTIST')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('ARTIST')")
     public ResponseEntity<String> createPlayList(@Valid @RequestBody PlayListParam playListParam) {
         return ResponseEntity.ok(playListFacade.createPlayList(playListParam));
     }
@@ -42,14 +42,14 @@ public class PlayListController {
     }
 
     @PutMapping("/{playListId}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER', 'ARTIST')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('ARTIST')")
     public ResponseEntity<String> updatePlayListName(@PathVariable("playListId") Long playListId,
                                                      @RequestParam("newPlayListName") String newPlayListName) {
         return ResponseEntity.ok(playListFacade.playListNameUpdate(playListId, newPlayListName));
     }
 
     @PutMapping("/{playListId}/status/{newStatus}")
-    @PreAuthorize("hasRole('ADMIN','USER', 'ARTIST')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('ARTIST')")
     public ResponseEntity<String> changePlayListStatus(@PathVariable("playListId") Long playListId,
                                                        @PathVariable("newStatus") PlayListStatus newStatus) {
         playListFacade.updatePlaylistStatus(playListId, newStatus);
@@ -57,7 +57,7 @@ public class PlayListController {
     }
 
     @PutMapping("/{playListId}/{songId}/{newSongId}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER', 'ARTIST')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('ARTIST')")
     public ResponseEntity<String> replaceSongInPlayList(@PathVariable("playListId") Long playListId,
                                                         @PathVariable("songId") Long songId,
                                                         @PathVariable("newSongId") Long newSongId) {
@@ -65,21 +65,21 @@ public class PlayListController {
     }
 
     @PutMapping("/add/{playListId}/{songId}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER', 'ARTIST')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('ARTIST')")
     public ResponseEntity<String> addSongToPlayList(@PathVariable("playListId") Long playListId,
                                                     @PathVariable("songId") Long songId) {
         return ResponseEntity.ok(playListFacade.addToPlayListSong(playListId, songId));
     }
 
     @PutMapping("/remove/{playListId}/{songId}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER', 'ARTIST')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('ARTIST')")
     public ResponseEntity<String> removeSongFromPlayList(@PathVariable("playListId") Long playListId,
                                                          @PathVariable("songId") Long songId) {
         return ResponseEntity.ok(playListFacade.removeFromPlayListSong(playListId, songId));
     }
 
     @DeleteMapping("/delete/{playListId}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER', 'ARTIST')")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('ARTIST')")
     public ResponseEntity<Void> deletePlayList(@PathVariable("playListId") Long playListId) {
         playListFacade.deletePlayList(playListId);
         return ResponseEntity.noContent().build();

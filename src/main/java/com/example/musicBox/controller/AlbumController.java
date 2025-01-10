@@ -27,7 +27,7 @@ public class AlbumController {
     private final AlbumService albumService;
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN', 'ARTIST')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ARTIST')")
 
     public ResponseEntity<String> createAlbum (@Valid @RequestBody AlbumParam albumParam){
         return ResponseEntity.ok(albumFacade.createAlbum(albumParam));
@@ -35,7 +35,7 @@ public class AlbumController {
 
 
     @PutMapping("/{albumId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'ARTIST')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ARTIST')")
 
     public ResponseEntity<String> updateAlbumName (@PathVariable("albumId") Long albumId,
                                                    @RequestParam("albumNewName") String albumNewName){
@@ -51,7 +51,7 @@ public class AlbumController {
 
 
     @PutMapping("/{albumId}/{songId}/{newSongId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'ARTIST')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ARTIST')")
 
     public  ResponseEntity<String> replaceSongInAlbum(@PathVariable("albumId") Long albumId,
                                                       @PathVariable("songId") Long songId,
@@ -60,14 +60,14 @@ public class AlbumController {
     }
 
     @PutMapping("/add/{albumId}/{songId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'ARTIST')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ARTIST')")
 
     public  ResponseEntity<String> addSong(@PathVariable("albumId") Long albumId,
                                            @PathVariable("songId") Long songId){
         return ResponseEntity.ok(albumFacade.addSongToAlbum(albumId, songId));
     }
     @PutMapping("/remove/{albumId}/{songId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'ARTIST')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ARTIST')")
 
     public  ResponseEntity<String> removeSong(@PathVariable("albumId") Long albumId,
                                            @PathVariable("songId") Long songId){
@@ -90,7 +90,7 @@ public ResponseEntity<List<AlbumDto>> viewUsersAlbums (@RequestParam("artistName
 }
 
     @DeleteMapping("/delete/{albumId}")
-    @PreAuthorize("hasAnyRole('ADMIN', 'ARTIST')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ARTIST')")
 
     public ResponseEntity<Void> deleteAlbum(@PathVariable("albumId") Long albumId){
         albumFacade.delete(albumId);

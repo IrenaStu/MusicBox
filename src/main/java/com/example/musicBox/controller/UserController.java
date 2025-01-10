@@ -24,13 +24,13 @@ public class UserController {
  private final UserFacade userFacade;
 
 @GetMapping
-@PreAuthorize("hasRole('USER', 'ADMIN', 'ARTIST')")
+@PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('ARTIST')")
 public ResponseEntity<UserDto> userViewItsInfo(){
     return ResponseEntity.ok(userFacade.userViewItsInformation());
 }
 
 @PutMapping
-@PreAuthorize("hasRole('USER', 'ADMIN', 'ARTIST')")
+@PreAuthorize("hasRole('USER') or hasRole('ADMIN') or hasRole('ARTIST')")
 
 public ResponseEntity<String> updateItself(@Valid@RequestBody RegisterParam registerParam){
     return ResponseEntity.ok(userFacade.updateUserInformation(registerParam));

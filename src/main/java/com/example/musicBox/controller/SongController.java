@@ -29,14 +29,14 @@ public class SongController {
 
 
     @PostMapping("/upload/{genre}")
-    @PostAuthorize("hasAnyRole('ADMIN', 'ARTIST')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ARTIST')")
     public ResponseEntity<String> uploadSong(@PathVariable("genre")MusicGenre genre,
                                              @Valid @RequestBody SongParam songParam){
         return ResponseEntity.ok(songFacade.uploadSong(songParam,genre));
     }
 
     @PutMapping("/update")
-    @PostAuthorize("hasAnyRole('ADMIN', 'ARTIST')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ARTIST')")
     public ResponseEntity<String> updateSong (@RequestParam Long songId,
                                               @Valid @RequestBody SongParam songParam ){
         return ResponseEntity.ok(songFacade.updateSong(songId, songParam));
@@ -60,7 +60,7 @@ public class SongController {
     }
 
     @DeleteMapping ("/delete/{songId}")
-    @PostAuthorize("hasAnyRole('ADMIN', 'ARTIST')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('ARTIST')")
     public ResponseEntity<Void> delete (@PathVariable("songId") Long songId){
         songFacade.delete(songId);
         return ResponseEntity.noContent().build();
